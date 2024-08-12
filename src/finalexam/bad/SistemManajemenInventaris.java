@@ -127,7 +127,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Produk", "Nama Produk", "Kategori", "Deskripsi", "Harga", "Stok", "Tanggal"
+                "No", "Nama Produk", "Kategori", "Deskripsi", "Harga", "Stok", "Kode Produk"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,7 +196,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Tanggal");
+        jLabel10.setText("Kode Produk");
 
         jButton4.setText("Cetak Laporan");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -347,6 +347,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             String kategori = jTextField2.getText();
             String harga = jTextField3.getText();
             String stok = jTextField4.getText();
+            String kode_produk = jTextField5.getText();
             String deskripsi = jTextArea1.getText();
             
             String kategori_cast;
@@ -362,7 +363,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             }
             
             
-            String query = "INSERT INTO m_produk (nama_produk, id_kategori, harga, stok, deskripsi) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO m_produk (nama_produk, id_kategori, harga, stok, deskripsi, kode_produk) VALUES (?, ?, ?, ?, ?, ?)";
     
             // Membuat PreparedStatement untuk mencegah SQL injection
             PreparedStatement pstmt = MySQLConnection.getConnection().prepareStatement(query);
@@ -371,6 +372,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             pstmt.setString(3, harga);
             pstmt.setString(4, stok);
             pstmt.setString(5, deskripsi);
+            pstmt.setString(6, kode_produk);
     
             // Eksekusi query
             pstmt.executeUpdate();
@@ -432,7 +434,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             Object deskripsi = jTable1.getValueAt(selectedRow, 3);
             Object harga = jTable1.getValueAt(selectedRow, 4);
             Object stok = jTable1.getValueAt(selectedRow, 5);
-
+            Object kode_produk = jTable1.getValueAt(selectedRow, 6);
 
             // Menampilkan nilai
             jTextField1.setText((String) nama_produk);
@@ -441,6 +443,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             jTextField4.setText((String) stok);
             jTextArea1.setText((String) deskripsi);
             jLabel9.setText((String) id_produk);
+            jTextField5.setText((String) kode_produk);
 
         } else {
             JOptionPane.showMessageDialog(this, "Tidak ada baris yang dipilih.");
@@ -468,10 +471,11 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             
             String harga = jTextField3.getText();
             String stok = jTextField4.getText();
+            String kode_produk = jTextField5.getText();
             String deskripsi = jTextArea1.getText();
             String id_produk = jLabel9.getText();
             
-            String query = "UPDATE m_produk SET nama_produk = ?, id_kategori = ?, harga = ?, stok = ?, deskripsi = ? WHERE id_produk = ?";
+            String query = "UPDATE m_produk SET nama_produk = ?, id_kategori = ?, harga = ?, stok = ?, deskripsi = ?, kode_produk = ? WHERE id_produk = ?";
     
             // Membuat PreparedStatement untuk mencegah SQL injection
             PreparedStatement pstmt = MySQLConnection.getConnection().prepareStatement(query);
@@ -480,7 +484,8 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             pstmt.setString(3, harga);
             pstmt.setString(4, stok);
             pstmt.setString(5, deskripsi);
-            pstmt.setString(6, id_produk);
+            pstmt.setString(6, kode_produk);
+            pstmt.setString(7, id_produk);
     
             // Eksekusi query
             pstmt.executeUpdate();
@@ -491,6 +496,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
             jTextField2.setText("");
             jTextField3.setText("");
             jTextField4.setText("");
+            jTextField5.setText("");
             jTextArea1.setText("");
             jLabel9.setText("ID Produk");
             
@@ -557,7 +563,7 @@ public class SistemManajemenInventaris extends javax.swing.JFrame {
                         sb.append("Nama Produk: ").append(rs.getString("nama_produk")).append("\n");
                         sb.append("Kategori: ").append(rs.getString("id_kategori")).append("\n");
                         sb.append("Deskripsi: ").append(rs.getString("deskripsi")).append("\n");
-//                        sb.append("Tanggal: ").append(rs.getDate("tanggal")).append("\n");
+                        sb.append("Kode Produk: ").append(rs.getDate("kode_produk")).append("\n");
                         sb.append("Harga: ").append(rs.getDouble("harga")).append("\n");
                         sb.append("Stok: ").append(rs.getInt("stok")).append("\n");
                         sb.append("-------------------------------\n");
